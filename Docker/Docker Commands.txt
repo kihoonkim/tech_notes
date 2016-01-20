@@ -1,0 +1,64 @@
+1. search image
+docker search ubuntu
+docker search mongo
+
+2. pull image
+docker pull mongo
+
+3. image 목록 보기
+docker images
+
+4. image를 container로 실행
+docker run --name mgdb mongo
+docker ps -a
+docker rm mgdb
+
+5. 실행중인 container에 접속
+docker run -d --name mgdb mongo
+docker ps
+docker logs -f mgdb
+docker attach mgdb
+docker start mgdb
+docker exec mgdb echo "test"
+
+7. dockerfile 만들기
+vi dockerfile
+FROM java:openjdk-8u45-jdk
+MAINTAINER koreakihoon@gmail.com
+ADD user-0.0.1-SNAPSHOT.jar .
+CMD java -jar user-0.0.1-SNAPSHOT.jar
+EXPOSE 8081
+
+8. dockerfile로 image 만들기
+docker build -t user_svc .
+docker images
+
+9. container link
+docker run -d -p 8081:8081 --link mgdb:mgdb --name user_svc user_svc
+docker ps
+
+10. container 중지 및 삭제
+docker stop user_svc   mgdb
+docker rm    user_svc   mgdb
+
+11. image 삭제
+docker rmi user_svc
+docker rmi mongo
+
+12. docker compose 설정
+vi docker-compose.yml
+users:
+  build: .
+  ports:
+    - "8081:8081"
+  links:
+    - mgdb
+mgdb:
+  image: mongo
+
+13. docker compose로 실행
+docker-compose up
+docker images
+docker ps
+
+
