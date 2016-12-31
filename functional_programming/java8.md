@@ -209,3 +209,7 @@ public class Calculator {
     }
 }
 ```
+
+Java8 에 대한 자세한 내용은..  
+http://www.slideshare.net/gyumee/java-8-lambda-35352385  
+http://www.slideshare.net/gyumee/8-37599530  
